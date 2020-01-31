@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FoodBack</title>
+<link rel="stylesheet" href="css/styles.css" />
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results[1] || 0;
+}
+$(document).ready(function() {
+
+	console.log($.urlParam('rest'));
+
+	var restaurant = $.urlParam('rest');
+
+    $.ajax( 'hello/json/' + restaurant, {
+        dataType:'json',
+        data:{},
+        type:'GET',
+        success:function ( data ) {
+            //console.log("success: " + data.result);
+            $( '#result' ).text( data.result );
+        }
+    })
+	
+});
+</script>
+</head>
+<body>
+	Restaurante:
+	<br>
+
+	<span id="result"></span>
+
+</body>
+</html>
