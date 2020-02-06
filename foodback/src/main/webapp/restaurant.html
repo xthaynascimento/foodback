@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>FoodBack</title>
-<link rel="stylesheet" href="css/styles.css" />
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -12,20 +11,24 @@ $.urlParam = function(name){
 }
 $(document).ready(function() {
 
-	console.log($.urlParam('rest'));
-
 	var restaurant = $.urlParam('rest');
+	
+	console.log(restaurant);
 
-    $.ajax( 'hello/json/' + restaurant, {
+    $.ajax( 'foodback/json/' + restaurant, {
         dataType:'json',
         data:{},
         type:'GET',
         success:function ( data ) {
-            //console.log("success: " + data.result);
+            //console.log("success: " + data);
             $( '#result' ).text( data.result );
         }
     })
-	
+    .error( function() {
+        //console.log("error");
+    });
+
+    
 });
 </script>
 </head>
@@ -33,7 +36,28 @@ $(document).ready(function() {
 	Restaurante:
 	<br>
 
-	<span id="result"></span>
+	<span id="result"></span> Qual a sua preferencia:
+	<br>
+	<form name="preferenciasForm">
+		<input type="radio">#vegetariano</input><br> <input type="radio">#vegano</input><br>
+		<input type="radio">#petfriendly</input><br> <input type="radio">#gluenfree</input><br>
+		<input type="radio">#restricaonozes</input><br> <input type="radio">#kidfriendly</input><br>
+		<input type="radio">#fit</input><br>
+		<input type="radio">#outros</input><br><br>
+		A sua preferencia foi atendida?
+		<input type="radio">Sim</input>
+		<input type="radio">Nao</input><br>
+		<br><br>Captcha
+		<br><br>
+		<input type="submit" id="enviar1" value="Salvar" /><br><span id="result1"></span>
+	</form>
+	
+		<form name="reviewForm">
+		Adicione um comentario ao seu feedback sobre o cardapio: <input type="text"></input><br> 
+		Foto: <input type="text"></input><br><br>
+		<input type="submit" id="enviar2" value="Enviar" /><br><span id="result2"></span>
+	</form>
+
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-package br.com.foodback;
+package br.com.foodback.rs;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -6,8 +6,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import br.com.foodback.service.HelloService;
+
 @Path("/")
 public class HelloWorld {
+	
     @Inject
     HelloService helloService;
 
