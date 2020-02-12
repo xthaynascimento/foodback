@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FoodBack</title>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    return results[1] || 0;
+}
+$(document).ready(function() {
+
+	var restaurant = $.urlParam('rest');
+	
+	console.log(restaurant);
+
+    $.ajax( 'foodback/json/' + restaurant, {
+        dataType:'json',
+        data:{},
+        type:'GET',
+        success:function ( data ) {
+            //console.log("success: " + data);
+            $( '#result' ).text( data.result );
+        }
+    })
+    .error( function() {
+        //console.log("error");
+    });
+
+    
+});
+</script>
+</head>
+<body>
+	Restaurante:
+	<br>
+
+	<span id="result"></span> Qual a sua preferencia:
+	<br>
+	<form name="preferenciasForm">
+		<input type="radio" id="vegetariano" value="vegetariano"> 
+		<label for="vegetariano">#vegetariano</label><br>
+		
+		<input type="radio" id="vegano" value="vegano">
+		<label for="vegano">#vegano</label><br>
+		
+		<input type="radio" id="petfriendly" value="petfriendly">
+		<label for="petfriendly">#petfriendly</label><br>
+				
+		<input type="radio" id="gluenfree" value="gluenfree">
+		<label for="gluenfree">#gluenfree</label><br>
+		
+		<input type="radio" id="restricaonozes" value="restricaonozes"> 
+		<label for="restricaonozes">#restricaonozes</label><br>
+		
+		<input type="radio" id="kidfriendly" value="fit">
+		<label for="kidfriendly">#kidfriendly</label><br>
+		
+     	<input type="radio" id="fit" value="fit">
+		<label for="fit">#fit</label><br>
+						
+		<input type="radio" id="outros" value="outros">
+		<label for="outros">#outros</label><br>
+				
+		<br> A sua preferencia foi atendida? 
+		
+		<input type="radio">Sim</input> 
+		
+		<input type="radio">Nao</input>
+		<br>
+		<br>
+		<br>		
+		Captcha
+		<br>
+		<br>
+		<br> 
+		
+		<input type="submit" id="enviar1" value="Salvar" /><br>
+		<span id="result1"></span>
+	</form>
+	<br>
+	<br>
+	<form name="reviewForm">
+		Adicione um comentario ao seu feedback sobre o cardapio: 
+		<input type="text"></input><br> 
+		Foto: <input type="text"></input>
+		<br>
+		<br> <input type="submit" id="enviar2" value="Enviar" />
+		<br>
+		<span id="result2"></span>
+	</form>
+
+
+</body>
+</html>

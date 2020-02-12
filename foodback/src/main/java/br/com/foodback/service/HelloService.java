@@ -8,8 +8,7 @@ public class HelloService {
 	@Inject
 	private EntityManager em;
 		
-    public String createHelloMessage(String name) {
-    	
+    public String createHelloMessage(String name) {    	
         return "Hello " + name + "!";
     }
 
