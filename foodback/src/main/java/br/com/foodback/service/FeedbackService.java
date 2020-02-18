@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import br.com.foodback.model.Feedback;
 
@@ -38,7 +38,7 @@ public class FeedbackService {
 	
 	public List<Feedback> findFeedbackByRestaurant(Long id) {
 		
-		Query query = em.createQuery("select e from Feedback e where e.restaurantId = :id",
+		TypedQuery<Feedback> query = em.createQuery("select e from Feedback e where e.restaurantId = :id",
 			    Feedback.class).setParameter("id", id);
 		
 		return (List<Feedback>) query.getResultList();
