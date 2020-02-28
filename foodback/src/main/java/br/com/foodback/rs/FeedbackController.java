@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import br.com.foodback.model.Feedback;
 import br.com.foodback.service.FeedbackService;
 
-@Path("/feedback/")
+@Path("/")
 public class FeedbackController {
 
     @Inject

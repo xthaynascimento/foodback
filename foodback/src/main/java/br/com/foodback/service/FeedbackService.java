@@ -32,6 +32,9 @@ public class FeedbackService {
 	
 	public Feedback findFeedback(Long id) {
 		Feedback f = em.find(Feedback.class, id);
+		
+    	System.out.println("findFeedback: " + f.toString());
+
 	    
 	    return f;
 	}
@@ -40,6 +43,10 @@ public class FeedbackService {
 		
 		TypedQuery<Feedback> query = em.createQuery("select e from Feedback e where e.restaurantId = :id",
 			    Feedback.class).setParameter("id", id);
+		
+		for (Feedback feedback : query.getResultList()) {
+			System.out.println("Feedback: " + feedback.getPreference());
+		}
 		
 		return (List<Feedback>) query.getResultList();
 	}

@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+    	document.getElementById("feedbackForm").onsubmit = function onSubmit(form) {
+
+		form = document.forms['feedbackForm'];
+		form.elements["restaurantId"].value = document.getElementById("id").innerHTML;
+	
+    }
+}
+</script>
 <body>
 
+    <span id="id" for="id" style="display:none"></span>
 	<label for="nome" id="nome">Nome do restaurante: </label>
 	<span id="name"></span>
 	<br>
 	<label for="endereco" id="endereco">Endereco: </label>
 	<span id="address"></span>
 	<br>
-	<label for="contador" id="contador">Contador das preferencias: </label>
 	<br>
-	<label for="review" id="review">Reviews</label>
-	<span id="review"></span>
+	<br> Resenhas:
 	<br>
-
-	<form method="get" action="feedback.html">
-		<button type="submit">Feedback</button>
+	<label for="preferencia" id="preferencia">Preferencias: </label>
+	<span id="preference"></span>
+	<br>
+	<label for="satisfeito" id="satisfeito">Atendeu as
+		expectativas? </label>
+	<span id="satisfied"></span>
+	<br>
+	<label for="comentario" id="comentario">Comentario: </label>
+	<span id="comment"></span>
+	<br>
+	<br>
+	<br>
+	<form id="feedbackForm" method="get" action="feedback.html">
+		<input name="restaurantId" type="hidden"></input>
+		<button type="submit" id="feedbackButton" >Feedback</button>		
 	</form>
 
 </body>

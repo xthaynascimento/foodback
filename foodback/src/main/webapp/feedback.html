@@ -6,22 +6,25 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 $.urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.search);
+
+	//alert(results[1]);
+    
     return results[1] || 0;
 }
 $(document).ready(function() {
 
-	var restaurant = $.urlParam('rest');
+	var restaurant = $.urlParam('restaurantId');
 	
-	console.log(restaurant);
+	//console.log(restaurant);
 
-    $.ajax( 'foodback/json/' + restaurant, {
+    $.ajax( 'api/restaurant/' + restaurant, {
         dataType:'json',
         data:{},
         type:'GET',
         success:function ( data ) {
             //console.log("success: " + data);
-            $( '#result' ).text( data.result );
+            $( '#result' ).text( data.name );
         }
     })
     .error( function() {
@@ -30,65 +33,62 @@ $(document).ready(function() {
 
     
 });
+function backToDetail(){
+	window.parent.hideDetails();
+	
+}
 </script>
 </head>
 <body>
-	Restaurante:
-	<br>
-
-	<span id="result"></span> Qual a sua preferencia:
+	Restaurante: <span id="result"></span>
+	<br><br>
+	Qual a sua preferencia:
 	<br>
 	<form name="preferenciasForm">
-		<input type="radio" id="vegetariano" value="vegetariano"> 
+		<input type="radio" id="vegetariano" name="preference" value="vegetariano" checked> 
 		<label for="vegetariano">#vegetariano</label><br>
 		
-		<input type="radio" id="vegano" value="vegano">
+		<input type="radio" id="vegano" name="preference" value="vegano">
 		<label for="vegano">#vegano</label><br>
 		
-		<input type="radio" id="petfriendly" value="petfriendly">
+		<input type="radio" id="petfriendly" name="preference" value="petfriendly">
 		<label for="petfriendly">#petfriendly</label><br>
 				
-		<input type="radio" id="gluenfree" value="gluenfree">
+		<input type="radio" id="gluenfree" name="preference" value="gluenfree">
 		<label for="gluenfree">#gluenfree</label><br>
 		
-		<input type="radio" id="restricaonozes" value="restricaonozes"> 
+		<input type="radio" id="restricaonozes" name="preference" value="restricaonozes"> 
 		<label for="restricaonozes">#restricaonozes</label><br>
 		
-		<input type="radio" id="kidfriendly" value="fit">
+		<input type="radio" id="kidfriendly" name="preference" value="fit">
 		<label for="kidfriendly">#kidfriendly</label><br>
 		
-     	<input type="radio" id="fit" value="fit">
+     	<input type="radio" id="fit" name="preference" value="fit">
 		<label for="fit">#fit</label><br>
 						
-		<input type="radio" id="outros" value="outros">
+		<input type="radio" id="outros" name="preference" value="outros">
 		<label for="outros">#outros</label><br>
 				
 		<br> A sua preferencia foi atendida? 
+		<div>
+		<input type="radio" id="sim" name="satisfied" value="yes" checked><label for="sim">Sim</label> 
+		<input type="radio" id="nao" name="satisfied" value="no"><label for="nao">Nao</label> 
+		</div>
+		<br>
 		
-		<input type="radio">Sim</input> 
-		
-		<input type="radio">Nao</input>
-		<br>
-		<br>
-		<br>		
-		Captcha
-		<br>
-		<br>
-		<br> 
-		
-		<input type="submit" id="enviar1" value="Salvar" /><br>
+		<input type="submit" id="enviar1" value="Salvar" /><br><br>
 		<span id="result1"></span>
 	</form>
 	<br>
 	<br>
 	<form name="reviewForm">
 		Adicione um comentario ao seu feedback sobre o cardapio: 
-		<input type="text"></input><br> 
-		Foto: <input type="text"></input>
-		<br>
-		<br> <input type="submit" id="enviar2" value="Enviar" />
-		<br>
-		<span id="result2"></span>
+		<input type="text"></input>
+		<input type="submit" id="enviar2" value="Enviar" />
+	</form>
+	<br>
+	<form method="get" action="detail.html" onsubmit="backToDetail()">
+		<button type="submit">Voltar</button>		
 	</form>
 
 

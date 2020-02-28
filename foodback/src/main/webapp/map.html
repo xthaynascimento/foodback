@@ -59,10 +59,23 @@ for (i = 0; i < locations.length; i++) {
    //}
  //})(marker, i));
 
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+    
  google.maps.event.addListener(marker, 'click', (function(marker, i) {
 	 return function() {
-		window.parent.openDetails(locations[i][0]);
-        window.parent.showDetails();        
+		//window.parent.openDetails(locations[i][0]);
+		window.parent.openPage();	
+		//alert(locations[i][0]);
+		sleep(200).then(() => {
+  		//do stuff
+	        window.parent.showDetails(locations[i][0]);
+	  		
+		})
+						
+        //window.parent.showDetails(locations[i][0]);
+        		     
 	 }
  })(marker, i));
 }
