@@ -9,13 +9,8 @@ public class RestaurantService {
 	
 	@Inject
 	private EntityManager em;
-		
-    public String createHelloMessage(String name) {    	
-        return "Hello " + name + "!";
-    }
     
     public Restaurant getRestaurantInfo(Long id) {
-    	
     	
     	Restaurant r = new Restaurant();
     	

@@ -15,6 +15,8 @@ $.urlParam = function(name){
 $(document).ready(function() {
 
 	var restaurant = $.urlParam('restaurantId');
+
+	$("#restaurantId").val(restaurant);
 	
 	//console.log(restaurant);
 
@@ -24,13 +26,61 @@ $(document).ready(function() {
         type:'GET',
         success:function ( data ) {
             //console.log("success: " + data);
-            $( '#result' ).text( data.name );
+            $( '#restaurantName' ).text( data.name );
+            $( '#restaurantId' ).text( data.id );
         }
     })
     .error( function() {
         //console.log("error");
     });
 
+
+
+    $( '#salvar1' ).click( function( event ) {
+
+    	event.preventDefault();
+
+    	var formData = $("#preferenciasForm").serializeArray();
+        $.ajax({
+        url: "api/feedback/",
+        type: 'POST',
+        contentType : "application/x-www-form-urlencoded",
+        dataType: 'json',
+            data: formData,
+        	success: function (data) {
+        		$("#commentId").val(data.id);
+                alert("Seu comentario foi adicionado com sucesso!");
+        		
+			}
+    	});
+    	
+
+    });
+    
+    
+    $( '#salvar2' ).click( function( event ) {
+
+    	event.preventDefault();
+
+    	var formData1 = $("#reviewForm").serializeArray();
+        $.ajax({
+        url: "api/feedback/comment/",
+        type: 'POST',
+        contentType : "application/x-www-form-urlencoded",
+        dataType: 'json',
+            data: formData1,
+        	success: function (data) {
+                alert("Seu comentario foi adicionado com sucesso!");
+            	
+       	 	},
+        	error: function (data) {
+            	alert("Por favor, adicione um feedback primeiro");
+        	
+   	 		}	
+    	});
+    	
+
+    });
     
 });
 function backToDetail(){
@@ -40,11 +90,14 @@ function backToDetail(){
 </script>
 </head>
 <body>
-	Restaurante: <span id="result"></span>
+	Restaurante: <span id="restaurantName"></span><br>
+
 	<br><br>
 	Qual a sua preferencia:
 	<br>
-	<form name="preferenciasForm">
+	<form id="preferenciasForm">
+	    <input id="restaurantId" name="restaurantId" style="display:none"></input>
+	
 		<input type="radio" id="vegetariano" name="preference" value="vegetariano" checked> 
 		<label for="vegetariano">#vegetariano</label><br>
 		
@@ -60,7 +113,7 @@ function backToDetail(){
 		<input type="radio" id="restricaonozes" name="preference" value="restricaonozes"> 
 		<label for="restricaonozes">#restricaonozes</label><br>
 		
-		<input type="radio" id="kidfriendly" name="preference" value="fit">
+		<input type="radio" id="kidfriendly" name="preference" value="kidfriendly">
 		<label for="kidfriendly">#kidfriendly</label><br>
 		
      	<input type="radio" id="fit" name="preference" value="fit">
@@ -76,20 +129,26 @@ function backToDetail(){
 		</div>
 		<br>
 		
-		<input type="submit" id="enviar1" value="Salvar" /><br><br>
-		<span id="result1"></span>
+		<input type="submit" id="salvar1" name="salvar1" value="Salvar" /><br><br>
 	</form>
+	<span id="result1"></span>
+	
 	<br>
 	<br>
-	<form name="reviewForm">
+	<form id="reviewForm">
+	    <input id="commentId" name="commentId" style="display:none"></input>
+	
 		Adicione um comentario ao seu feedback sobre o cardapio: 
-		<input type="text"></input>
-		<input type="submit" id="enviar2" value="Enviar" />
+		<input type="text" id="comment" name="comment"></input>
+		<input type="submit" id="salvar2" name="salvar2" value="Enviar" />
 	</form>
+	<span id="result2"></span>
+	
 	<br>
 	<form method="get" action="detail.html" onsubmit="backToDetail()">
 		<button type="submit">Voltar</button>		
 	</form>
+	
 
 
 </body>

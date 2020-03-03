@@ -2,10 +2,7 @@
 <html>
 <head>
 <title>FoodBack</title>
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyDQdRCXQN2qMI7bFTV31cipkAZd24FHO6E"
-	type="text/javascript"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
 function openPage() {
 	$('#details').attr("src", "detail.html")
@@ -16,15 +13,14 @@ function showDetails(retaurantId) {
 	setRestaurantInfo(retaurantId);
 	   
 }
-function hideDetails() {
-	
+function hideDetails() {	
 	$("#details").hide();
 	   
 }
 function setRestaurantInfo( retaurantId ) {
 
     $.ajax( 'api/restaurant/' + retaurantId, {
-        dataType:'json',
+    	dataType: 'json',       
         data:{},
         type:'GET',
         success:function ( data ) {
@@ -40,20 +36,19 @@ function setRestaurantInfo( retaurantId ) {
         //console.log("error");
     });
 
-    var details = jQuery('frame[name="details"]');
+    var details = jQuery('frame[name="details"]');          
     
-    $.ajax( 'api/feedback/' + retaurantId, {
+    $.ajax( 'api/feedback/restaurant/' + retaurantId, {
         dataType:'json',
         data:{},
         type:'GET',
         success:function ( data ) {
-        	$('#details').contents().find('#preference').text( data.preference );
-        	$('#details').contents().find('#satisfied').text( data.satisfied );
-        	$('#details').contents().find('#comment').text( data.comment );
+
+        	data.forEach(function(item){
+        		$('#details').contents().find('#show-data').append("<p>Preferencia: " + item.preference + "<br>Satisfeito: " + item.satisfied + "<br>Comentario: " + item.comment + "</p><br>");
+        	});
+    		        	
         }
-    })
-    .error( function() {
-        //console.log("error");
     });
     
 }

@@ -2,7 +2,10 @@ package br.com.foodback.rs;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,29 +16,31 @@ import br.com.foodback.model.Feedback;
 import br.com.foodback.service.FeedbackService;
 
 @Path("/")
+@Stateless
 public class FeedbackController {
 
     @Inject
     private FeedbackService feedbackService;
     
     @POST
-    @Path("/feedback/{restaurantId}/")
+    @Path("/feedback")
     @Produces("application/json")
-    public Feedback createFeedback(@PathParam("restaurantId") Long restaurantId) {
-        System.out.println("Creating feedback for option " + "option");
-        Feedback response = feedbackService.addFeedback("option", true, restaurantId); //replace mocks
+    @Consumes("application/x-www-form-urlencoded")
+    public Feedback createFeedback(@FormParam("preference") String preference, @FormParam("satisfied") String satisfied, @FormParam("restaurantId") Long restaurantId) {
+        System.out.println("Creating feedback for option " + preference + " " + satisfied + " " + restaurantId);
+        	
+        return feedbackService.addFeedback(preference, (satisfied.equals("yes") ? true : false), restaurantId); 
         
-        return response;
     }
         
     @POST
-    @Path("/feedback/comment/{id}")
+    @Path("/feedback/comment")
+    @Consumes("application/x-www-form-urlencoded")
     @Produces("application/json")
-    public Feedback createFeedbackComment(@PathParam("id") Long id) {
-        System.out.println("Adding comment for feedback id: " + id);
-        Feedback response = feedbackService.addFeedbackComment(id, "comment here"); //replace mocks
+    public Feedback createFeedbackComment(@FormParam("comment") String comment, @FormParam("commentId") Long commentId) {
+        System.out.println("Adding comment for feedback id: " + comment + " " + commentId);
+        return feedbackService.addFeedbackComment(commentId, comment); 
         
-        return response;  
     }   
     
     @GET

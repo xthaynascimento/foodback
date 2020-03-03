@@ -1,5 +1,6 @@
 package br.com.foodback.rs;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,6 +11,7 @@ import br.com.foodback.model.Restaurant;
 import br.com.foodback.service.RestaurantService;
 
 @Path("/")
+@Stateless
 public class RestaurantController {
 	
     @Inject
